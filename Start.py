@@ -73,3 +73,4 @@ pygame.quit()
 
 
 #cos dopisuje
+#gsfdagdfgvdbzgbvzbz
