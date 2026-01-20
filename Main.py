@@ -14,9 +14,14 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.font = pygame.font.SysFont("Arial", 20)
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        try:
+            self.background = pygame.image.load(BG_IMAGE_PATH).convert()
+        except:
+            print("Brak tła, używam koloru.")
+            self.background = None  # Fallback
 
         self.new_game()
-
     def new_game(self):
         # Grupy spritów
         self.all_sprites = pygame.sprite.Group()
@@ -117,7 +122,12 @@ class Game:
             self.new_game()
 
     def draw(self):
-        self.screen.fill(SKY_BLUE)
+        # --- ZMIANA TUTAJ: Rysowanie tła ---
+        if self.background:
+            self.screen.blit(self.background, (0, 0))
+        else:
+            self.screen.fill(SKY_BLUE)  # Stare tło jednokolorowe
+
         self.all_sprites.draw(self.screen)
 
         # Rysowanie wyniku

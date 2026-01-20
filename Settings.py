@@ -28,15 +28,18 @@ SKY_BLUE = (135, 206, 235)
 LAVA_COLOR = (255, 69, 0)
 
 # --- KONFIGURACJA WYGLĄDU GRACZA (Point 7 & Customization) ---
-# Zmień 'color' na inny lub podaj ścieżkę do pliku w 'image_path' (np. "hero.png")
+# Ścieżki do grafik
+BG_IMAGE_PATH = "grafika/background.png"
+PLATFORM_IMAGE_PATH = "grafika/platform.png"
+
+# Zmień konfigurację gracza na:
 PLAYER_SKIN = {
     "width": 32,
     "height": 48,
-    "color_idle": (50, 50, 200),
-    "color_run": (70, 70, 220),
-    "color_jump": (100, 100, 255),
-    "image_path": None  # Jeśli masz plik, wpisz np. "grafika/postac.png"
-}
+    "color_idle": (0,0,0), # Te kolory są teraz ignorowane, bo jest obrazek
+    "color_run": (0,0,0),
+    "color_jump": (0,0,0),
+    "image_path": "grafika/hero.png"} # Ścieżka do pliku wygenerowanego skryptem
 
 # Funkcja pomocnicza do generowania tekstur (nie musisz jej zmieniać)
 def create_texture(width, height, color, char_sign=""):

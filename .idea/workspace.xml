@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5eb25f4-9699-40f0-97fd-423fd88b33de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/World_objects.py" afterDir="false" />
+    <list default="true" id="a5eb25f4-9699-40f0-97fd-423fd88b33de" name="Changes" comment="dodalem wszystko">
+      <change afterPath="$PROJECT_DIR$/Grafika.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Start.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/World_objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/World_objects.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +59,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.Grafika.executor": "Run",
     "Python.Main.executor": "Run",
     "Python.Player.executor": "Run",
     "Python.Settings.executor": "Run",
@@ -85,6 +85,30 @@
       <option name="presentableId" value="Default" />
       <updated>1768935996578</updated>
     </task>
+    <task id="LOCAL-00001" summary="dodalem wszystko">
+      <option name="closed" value="true" />
+      <created>1768937065893</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1768937065893</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="dodalem wszystko" />
+    <option name="LAST_COMMIT_MESSAGE" value="dodalem wszystko" />
   </component>
 </project>
