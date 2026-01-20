@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6d0d2d27-88df-4ea3-a7d5-8cd9a1831616" name="Changes" comment="Startowy projekt" />
+    <list default="true" id="a5eb25f4-9699-40f0-97fd-423fd88b33de" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/World_objects.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Start.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,32 +27,47 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "IMT1OLIVER"
+  }
+}]]></component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOQ6jPIs69bzy8&quot;,
+        &quot;number&quot;: 1
+      },
+      &quot;lastSeen&quot;: 1768500157823
+    }
+  ]
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/IMT1OLIVER/Projekt_prog_obiekt.git",
     "accountId": "c6a43179-eb5f-4a13-81ee-ce62062eaca5"
   }
 }]]></component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
-}</component>
-  <component name="ProjectId" id="37wQRbxNQoKjQdbpt7nU6XTsYze" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="38XBNTILd7nuWAOUYKhQIouWfQT" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.Main.executor": "Run",
+    "Python.Player.executor": "Run",
+    "Python.Settings.executor": "Run",
     "Python.Start.executor": "Run",
+    "Python.World_objects.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/user/Documents/3_rok/programowanie_obiektowe/Projekt"
-  },
-  "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
-      "repository"
-    ]
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master"
   }
 }]]></component>
   <component name="SharedIndexes">
@@ -57,48 +79,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6d0d2d27-88df-4ea3-a7d5-8cd9a1831616" name="Changes" comment="" />
-      <created>1767811646428</created>
+      <changelist id="a5eb25f4-9699-40f0-97fd-423fd88b33de" name="Changes" comment="" />
+      <created>1768935996578</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1767811646428</updated>
+      <updated>1768935996578</updated>
     </task>
-    <task id="LOCAL-00001" summary="Startowy projekt">
-      <option name="closed" value="true" />
-      <created>1768498430626</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1768498430626</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Startowy projekt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Startowy projekt" />
   </component>
 </project>
