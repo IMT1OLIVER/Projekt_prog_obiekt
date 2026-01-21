@@ -18,6 +18,9 @@ LAVA_SPEED = 1.5  # Szybsza lawa = więcej presji
 COYOTE_TIME = 170  # ms - więcej czasu na timing
 JUMP_BUFFER = 170  # ms - większy bufor dla szybkiej gry
 
+# --- SYSTEM WYNIKÓW ---
+HS_FILE = "highscore.txt"
+
 # --- GENEROWANIE POZIOMU ---
 PLATFORM_GAP_Y = (40, 100)  # Min i max odległość pionowa między platformami (zwiększone dla wyższego ekranu)
 PLATFORM_WIDTH_RANGE = (90, 150)  # Zmniejszone dla węższego ekranu (40-150)
