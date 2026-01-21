@@ -46,7 +46,6 @@ class Player(pygame.sprite.Sprite):
 
     # --- TUTAJ BYŁ BŁĄD - TO JEST POPRAWIONA FUNKCJA ---
     def jump(self):
-        print("[JUMP] Jump function called")
         now = pygame.time.get_ticks()
         
         # Sprawdź czy możemy skoczyć (na ziemi lub coyote time)
