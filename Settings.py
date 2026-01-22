@@ -24,7 +24,7 @@ HS_FILE = "highscore.txt"
 # --- GENEROWANIE POZIOMU ---
 PLATFORM_GAP_Y = (40, 100)  # Min i max odległość pionowa między platformami (zwiększone dla wyższego ekranu)
 PLATFORM_WIDTH_RANGE = (90, 150)  # Zmniejszone dla węższego ekranu (40-150)
-MAX_PLATFORMS = 25          # Więcej platform dla wyższego ekranu
+MAX_PLATFORMS = 20         # Więcej platform dla wyższego ekranu
 
 # --- KOLORY ---
 WHITE = (255, 255, 255)
