@@ -1,7 +1,7 @@
 import pygame
 
 # --- EKRAN ---
-SCREEN_WIDTH = 800
+SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 800
 FPS = 60
 TITLE = "Infinite Jumper - Python"
@@ -14,16 +14,22 @@ MAX_HORIZONTAL_SPEED = 8  # Ograniczona prędkość
 JUMP_POWER = -17  # Silny skok ale nie przesadzony (było -18)
 JUMP_SPEED_BONUS = 0.50  # Średni bonus z prędkości (było 0.75 - za duży)
 JUMP_CUT_MULTIPLIER = 0.45  # Mocniejsze cięcie dla kontroli
-LAVA_SPEED = 1.5  # Szybsza lawa = więcej presji
 COYOTE_TIME = 170  # ms - więcej czasu na timing
 JUMP_BUFFER = 170  # ms - większy bufor dla szybkiej gry
+
+# --- NOWE: PARAMETRY TRUDNOŚCI I LAWY ---
+LAVA_START_SPEED = 1.2      # Prędkość bazowa lavy
+LAVA_CHASE_FACTOR = 0.015   # Współczynnik "pogoni" lawy za graczem
+LAVA_MAX_SPEED = 12         # Maksymalna prędkość lavy zeby nie przyspieszala w nieskonczonosc
+DIFFICULTY_INCREMENT = 0.0001 # Jak szybko rośnie trudność z każdą klatką (przy 60 FPS trudność wzrasta o ok. 0.36 na minutę)
+PLATFORM_MIN_WIDTH = 40     # Minimalna szerokość platformy dzięki której platformy nigdy nie staną się tak małe, że nie dałoby się na nie wskoczyć
 
 # --- SYSTEM WYNIKÓW ---
 HS_FILE = "highscore.txt"
 
 # --- GENEROWANIE POZIOMU ---
-PLATFORM_GAP_Y = (40, 100)  # Min i max odległość pionowa między platformami (zwiększone dla wyższego ekranu)
-PLATFORM_WIDTH_RANGE = (90, 150)  # Zmniejszone dla węższego ekranu (40-150)
+PLATFORM_GAP_Y = (40, 100)  # Min i max odległość pionowa między platformami
+PLATFORM_WIDTH_RANGE = (90, 150)  # Zmniejszone dla węższego ekranu
 MAX_PLATFORMS = 20         # Więcej platform dla wyższego ekranu
 
 # --- KOLORY ---
@@ -35,22 +41,19 @@ BLUE = (50, 50, 200)
 SKY_BLUE = (135, 206, 235)
 LAVA_COLOR = (255, 69, 0)
 
-# --- KONFIGURACJA WYGLĄDU GRACZA (Point 7 & Customization) ---
-# Ścieżki do grafik
+# --- KONFIGURACJA WYGLĄDU GRACZA ---
 BG_IMAGE_PATH = "grafika/background.png"
 PLATFORM_IMAGE_PATH = "grafika/platform.png"
-LAVA_IMAGE_PATH = "grafika/lava.png" # Ścieżka do wygenerowanego obrazka struktury
+LAVA_IMAGE_PATH = "grafika/lava.png" 
 
-# Zmień konfigurację gracza na:
 PLAYER_SKIN = {
     "width": 32,
     "height": 48,
-    "image_path": "grafika/hero.png"} # Ścieżka do pliku wygenerowanego skryptem
+    "image_path": "grafika/hero.png"} 
 
-# Funkcja pomocnicza do generowania tekstur (nie musisz jej zmieniać)
 def create_texture(width, height, color, char_sign=""):
     surf = pygame.Surface((width, height))
     surf.fill(color)
-    pygame.draw.rect(surf, (255,255,255), (width-10, 5, 5, 5)) # Oczy
+    pygame.draw.rect(surf, (255,255,255), (width-10, 5, 5, 5)) 
     return surf
 
