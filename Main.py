@@ -30,7 +30,6 @@ class Game:
             print("Brak tła, używam koloru.")
             self.background = None
 
-        self.load_data()
         self.show_main_menu()
 
     def show_main_menu(self):
@@ -43,12 +42,12 @@ class Game:
             return
         self.new_game()
 
-    def load_data(self):
-        """Ładuje dane z pliku (dla kompatybilności wstecznej)"""
-        pass
-
     def new_game(self):
         """Inicjalizuje nową grę"""
+        self.difficulty = 1.0  # Startowy mnożnik trudności
+        self.score = 0
+        self.record_celebrated = False  # Reset flagi rekordu
+        
         # Grupy spritów
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
@@ -59,18 +58,15 @@ class Game:
         self.all_sprites.add(self.player)
 
         # Lawa
-        self.lava = Lava()
+        self.lava = Lava(self)
         self.danger_zone.add(self.lava)
         self.all_sprites.add(self.lava)
 
         # Platforma startowa
-        p1 = Platform(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 60)
+        p1 = Platform(self, SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 60)
         self.all_sprites.add(p1)
         self.platforms.add(p1)
 
-        self.score = 0
-        self.player_manager.record_broken = False# Reset flagi rekordu
-        self.record_celebrated = False# Reset flagi rekordu
         # Pobierz aktualny rekord świata na start
         top_scores = self.leaderboard.get_top_10()
         self.high_score = top_scores[0]["score"] if top_scores else 0
@@ -102,14 +98,17 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE or event.key == pygame.K_w or event.key == pygame.K_UP:
+                if event.key in [pygame.K_SPACE, pygame.K_w, pygame.K_UP]:
                     self.player.jump()
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE or event.key == pygame.K_w or event.key == pygame.K_UP:
+                if event.key in [pygame.K_SPACE, pygame.K_w, pygame.K_UP]:
                     self.player.jump_cut()
 
     def update(self):
         """Aktualizacja gry"""
+        # Zwiększanie trudności z każdą klatką
+        self.difficulty += DIFFICULTY_INCREMENT
+        
         self.all_sprites.update()
 
         # 1. KOLIZJE Z PLATFORMAMI
@@ -120,7 +119,7 @@ class Game:
                     self.player.pos.y = hits[0].rect.top
                     self.player.vel.y = 0
 
-        # 3. KAMERA (PRZESUWANIE EKRANU W GÓRĘ)
+        # 2. KAMERA (PRZESUWANIE EKRANU W GÓRĘ)
         scroll_threshold = SCREEN_HEIGHT / 2
         if self.player.rect.top <= scroll_threshold:
             self.player.pos.y += abs(self.player.vel.y)
@@ -133,32 +132,32 @@ class Game:
             self.lava.rect.y += abs(self.player.vel.y)
             self.score += int(abs(self.player.vel.y))
 
-        # 4. GENEROWANIE NOWYCH PLATFORM
+        # 3. GENEROWANIE NOWYCH PLATFORM
         while len(self.platforms) < MAX_PLATFORMS:
-            width = random.randint(*PLATFORM_WIDTH_RANGE)
-            x = random.randrange(0, SCREEN_WIDTH - width)
             highest_plat = min(self.platforms, key=lambda p: p.rect.top)
             y = highest_plat.rect.top - random.randint(*PLATFORM_GAP_Y)
+            x = random.randrange(0, SCREEN_WIDTH - 100)
 
-            p = Platform(x, y)
+            p = Platform(self, x, y)
             self.platforms.add(p)
             self.all_sprites.add(p)
 
-        # 5. ŚMIERĆ (DOTKNIĘCIE LAWY LUB SPADNIĘCIE)
+        # 4. ŚMIERĆ (DOTKNIĘCIE LAWY LUB SPADNIĘCIE)
         death_by_lava = pygame.sprite.spritecollide(self.player, self.danger_zone, False)
         fell_off = self.player.rect.top > SCREEN_HEIGHT + 200
 
         if death_by_lava or fell_off:
             self.handle_game_over()
-         # Sprawdź czy rekord został właśnie pobity
+
+        # 5. Sprawdzenie czy rekord został właśnie pobity
         if self.score > self.high_score and not self.record_celebrated:
-            if self.high_score > 0:  # Nie pokazuj przy pierwszej grze od zera
+            if self.high_score > 0:
                 self.player_manager.setup_confetti(SCREEN_WIDTH)
                 self.record_celebrated = True
 
     def handle_game_over(self):
         """Obsługuje koniec gry"""
-        # Sprawdzamy czy to nowy rekord ŚWIATA (czyli bije wynik z 1 miejsca)
+        # Sprawdzamy czy to nowy rekord ŚWIATA
         is_new_record = False
         top_scores = self.leaderboard.get_top_10()
         if not top_scores or self.score > top_scores[0]["score"]:
@@ -167,13 +166,12 @@ class Game:
         # Dodaj wynik do leaderboard
         self.leaderboard.add_score(self.current_player, self.score)
 
-        # Jeśli to nowy rekord, wyświetl animację konfetti
+        # Jeśli to nowy rekord, wyświetl komunikat
         if is_new_record:
             self.player_manager.display_first_place_message(
                 self.screen, SCREEN_WIDTH, SCREEN_HEIGHT, self.score
             )
 
-        # Wyświetl menu po grze
         action = self.player_manager.display_game_over_menu(
             self.screen, SCREEN_WIDTH, SCREEN_HEIGHT,
             self.current_player, self.score, self.leaderboard
@@ -186,8 +184,6 @@ class Game:
         elif action == "quit":
             self.running = False
 
-
-
     def draw(self):
         """Rysowanie gry"""
         if self.background:
@@ -197,8 +193,10 @@ class Game:
 
         self.all_sprites.draw(self.screen)
         self.player_manager.draw_ingame_animation(self.screen, SCREEN_WIDTH)
-        # Rysowanie wyniku bieżącego
-        score_surf = self.font.render(f"Wysokość: {self.score}", True, BLACK)
+
+        # Rysowanie wyniku bieżącego i trudności
+        score_text = f"Wysokość: {self.score} | Trudność: {round(self.difficulty, 2)}"
+        score_surf = self.font.render(score_text, True, BLACK)
         self.screen.blit(score_surf, (10, 10))
 
         # Rysowanie nicku gracza
