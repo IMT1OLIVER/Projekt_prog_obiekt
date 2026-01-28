@@ -7,7 +7,6 @@ from World_objects import Platform, Lava
 from LeaderBoard import LeaderBoard
 from PlayerManager import PlayerManager
 
-
 class Game:
     def __init__(self):
         pygame.init()
@@ -30,7 +29,6 @@ class Game:
             print("Brak tła, używam koloru.")
             self.background = None
 
-        self.load_data()
         self.show_main_menu()
 
     def show_main_menu(self):
@@ -43,12 +41,11 @@ class Game:
             return
         self.new_game()
 
-    def load_data(self):
-        """Ładuje dane z pliku (dla kompatybilności wstecznej)"""
-        pass
-
     def new_game(self):
         """Inicjalizuje nową grę"""
+        self.difficulty = 1.0  # Startowy mnożnik trudności
+        self.score = 0
+        
         # Grupy spritów
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
@@ -58,17 +55,15 @@ class Game:
         self.player = Player(self)
         self.all_sprites.add(self.player)
 
-        # Lawa
-        self.lava = Lava()
+        # Lawa (teraz przekazujemy self)
+        self.lava = Lava(self)
         self.danger_zone.add(self.lava)
         self.all_sprites.add(self.lava)
 
         # Platforma startowa
-        p1 = Platform(SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 60)
+        p1 = Platform(self, SCREEN_WIDTH / 2 - 50, SCREEN_HEIGHT - 60)
         self.all_sprites.add(p1)
         self.platforms.add(p1)
-
-        self.score = 0
 
     def check_ground(self):
         """Sprawdza czy gracz stoi na ziemi"""
@@ -97,14 +92,17 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE or event.key == pygame.K_w or event.key == pygame.K_UP:
+                if event.key in [pygame.K_SPACE, pygame.K_w, pygame.K_UP]:
                     self.player.jump()
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE or event.key == pygame.K_w or event.key == pygame.K_UP:
+                if event.key in [pygame.K_SPACE, pygame.K_w, pygame.K_UP]:
                     self.player.jump_cut()
 
     def update(self):
         """Aktualizacja gry"""
+        # Zwiększanie trudności z każdą klatką
+        self.difficulty += DIFFICULTY_INCREMENT
+        
         self.all_sprites.update()
 
         # 1. KOLIZJE Z PLATFORMAMI
@@ -130,12 +128,11 @@ class Game:
 
         # 4. GENEROWANIE NOWYCH PLATFORM
         while len(self.platforms) < MAX_PLATFORMS:
-            width = random.randint(*PLATFORM_WIDTH_RANGE)
-            x = random.randrange(0, SCREEN_WIDTH - width)
             highest_plat = min(self.platforms, key=lambda p: p.rect.top)
             y = highest_plat.rect.top - random.randint(*PLATFORM_GAP_Y)
+            x = random.randrange(0, SCREEN_WIDTH - 100)
 
-            p = Platform(x, y)
+            p = Platform(self, x, y) # Przekazujemy self (grę)
             self.platforms.add(p)
             self.all_sprites.add(p)
 
@@ -148,16 +145,10 @@ class Game:
 
     def handle_game_over(self):
         """Obsługuje koniec gry"""
-        # Dodaj wynik do leaderboard
         self.leaderboard.add_score(self.current_player, self.score)
-
-        # Sprawdź czy to 1 miejsce
         if self.leaderboard.is_first_place(self.current_player, self.score):
-            self.player_manager.display_first_place_message(
-                self.screen, SCREEN_WIDTH, SCREEN_HEIGHT
-            )
+            self.player_manager.display_first_place_message(self.screen, SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        # Wyświetl menu po grze
         action = self.player_manager.display_game_over_menu(
             self.screen, SCREEN_WIDTH, SCREEN_HEIGHT,
             self.current_player, self.score
@@ -179,8 +170,9 @@ class Game:
 
         self.all_sprites.draw(self.screen)
 
-        # Rysowanie wyniku bieżącego
-        score_surf = self.font.render(f"Wysokość: {self.score}", True, BLACK)
+        # Rysowanie wyniku bieżącego i poziomu trudności
+        score_text = f"Wysokość: {self.score} | Trudność: {round(self.difficulty, 2)}"
+        score_surf = self.font.render(score_text, True, BLACK)
         self.screen.blit(score_surf, (10, 10))
 
         # Rysowanie nicku gracza
